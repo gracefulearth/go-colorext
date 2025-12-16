@@ -32,9 +32,11 @@ func grayS16Model(c color.Color) color.Color {
 	// These coefficients (the fractions 0.299, 0.587 and 0.114) are the same
 	// as those given by the JFIF specification and used by the standard library.
 	// Note that 19595 + 38470 + 7471 equals 65536.
+	// The result y will be in the range [0, 65535].
 	y := (19595*r + 38470*g + 7471*b + 1<<15) >> 16
 
 	// Convert from unsigned [0, 65535] to signed [-32768, 32767]
-	// by subtracting 32768
-	return GrayS16{int16(y - 32768)}
+	// by subtracting 32768. Use int32 for safe intermediate calculation.
+	signedY := int32(y) - 32768
+	return GrayS16{int16(signedY)}
 }
