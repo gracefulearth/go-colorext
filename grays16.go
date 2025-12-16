@@ -127,7 +127,8 @@ func (p *GrayS16Image) SubImage(r image.Rectangle) image.Image {
 	}
 }
 
-// Opaque scans the entire image and reports whether it is fully opaque.
+// Opaque reports whether the image is fully opaque.
+// GrayS16Image is always fully opaque since the GrayS16 color model has no transparency.
 func (p *GrayS16Image) Opaque() bool {
 	return true
 }
